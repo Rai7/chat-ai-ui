@@ -26,10 +26,16 @@ const createUser = async () => {
   error.value = '';
 
   try {
-    const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/register-user`, {
-      name: name.value,
-      email: email.value,
-    });
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/register-user`,
+      {
+        name: name.value,
+        email: email.value,
+      },
+      {
+        timeout: 20000 // ⬅ Increased to 20 seconds to handle cold starts
+      }
+    );
 
     userStore.setUser({
       userId: data.userId,
